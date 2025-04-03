@@ -1,0 +1,172 @@
+package Porjects;
+import java.util.Scanner;
+
+public abstract class User {
+	protected String name;
+	protected String userid;
+	
+	public User(String name,String userid) {
+		this.name=name;
+		this.userid=userid;
+	}
+	abstract void showDetails();
+
+}
+
+public class Students extends User{
+
+	public Students(String name, String userid) {
+		super(name, userid);
+		
+	}
+
+	@Override
+	void showDetails() {
+		System.out.println("name of the students"+this.name+"with user id"+this.userid);
+		
+	}
+
+}
+public class Librarian extends User{
+	public Librarian(String name,String userid) {
+		super(name,userid);
+	}
+
+	@Override
+	void showDetails() {
+		System.out.println("Name of the student: " + this.name + " | User ID: " + this.userid);
+
+		
+	}
+
+}
+public class Book {
+	private String Title;
+	private String Author;
+	private boolean Issued;
+	
+	public Book(String title, String author) {
+	    this.Title = title;
+	    this.Author = author;
+	    this.Issued = false;
+	}
+
+
+	
+	public String getTitle() {
+		return this.Title;
+	}
+	public boolean getIssued() {
+		return this.Issued;
+	}
+	public boolean issuedBook() {
+	    if (!this.Issued) {
+	        this.Issued = true;
+	        System.out.println("The book has been issued.");
+	        return true;
+	    } else {
+	        System.out.println("This book is already issued.");
+	        return false;
+	    }
+	}
+
+	public void returnBook() {
+	    if (this.Issued) {
+	        this.Issued = false;
+	        System.out.println("The book has been returned.");
+	    } else {
+	        System.out.println("This book was not issued.");
+	    }
+	}
+
+
+}
+public class Library {
+	private List<Book> books = new ArrayList<>();
+	public void addBook(Book book) {
+		books.add(book);
+	}
+	
+	public void showBooks() {
+		for(Book bookoflib:books) {
+			System.out.println("Book title: " + bookoflib.getTitle() + " is " + (bookoflib.getIssued() ? "issued" : "not issued"));
+		}
+	}
+	
+	public Book getBook(int index) {
+		if(index>=0 && index<books.size()) {
+			return books.get(index);
+		}
+		return null;
+	}
+	
+}
+
+
+
+public class LibraryManagement {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		Library lib = new Library();
+		
+		Book harrypotter = new Book("harrypotter","JK rowling");
+		Book richandpoordad = new Book("richandpoordad","robert");
+		
+		lib.addBook(richandpoordad);
+		lib.addBook(harrypotter);
+		System.out.println("welcome to library");
+		while(true) {
+			System.out.println("choose a option");
+			System.out.println("1.view books");
+			System.out.println("2.Issue a book");
+			System.out.println("3.return a book");
+			System.out.println("4.Exit the library");
+			int n = sc.nextInt();
+			sc.nextLine();
+			
+			switch(n) {
+			case 1:
+				lib.showBooks();
+				break;
+			case 2:
+				lib.showBooks();
+				System.out.println("enter book number to issue:");
+				int issueidx=sc.nextInt();
+				sc.nextLine();
+				Book booktoissued = lib.getBook(issueidx - 1); 
+
+				if(booktoissued != null) {
+					booktoissued.issuedBook();
+				}
+				else {
+					System.out.println("no such book is exits");
+				}
+				break;
+			case 3:
+				lib.showBooks();
+				System.out.println("enter book number to issue:");
+				int returnidx=sc.nextInt();
+				sc.nextLine();
+				Book booktoreturned = lib.getBook(returnidx-1);
+				if(booktoreturned != null) {
+					booktoreturned.returnBook();
+				}
+				else {
+					System.out.println("no such book is exits");
+				}
+				break;
+			case 4:
+				System.out.println("Thank you for coming our library");
+				return;
+			
+			default:
+				System.out.println("invalid");
+				break;
+				
+			}
+		}
+
+	}
+
+}
