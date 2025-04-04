@@ -1,0 +1,92 @@
+package project2;
+
+import java.util.Scanner;
+
+class BankAccount{
+	private static int AccountCounter = 1000;
+	private int Accountnumber;
+	private String AccountHolderName;
+	private double AccountBalance;
+	
+	public BankAccount(String AccountHolderName,double initialBalance) {
+		this.Accountnumber=Accountnumber;
+		this.AccountHolderName=AccountHolderName;
+		this.AccountBalance=initialBalance;
+	}
+	
+	public void deposit(double amount) {
+		if(amount>0) {
+			AccountBalance+=amount;
+			System.out.println("Amount is sucessfully deposited . the new balance is "+this.AccountBalance);
+			
+		}
+		else {
+			System.out.println("invalid to deposit");
+		}
+	}
+	
+	public void Withdraw(double amount) {
+		if(amount >0 && amount <=AccountBalance) {
+			AccountBalance-=amount;
+			System.out.println("Amount is successfully withdraw and your balance is "+this.AccountBalance);
+		}
+		else {
+			System.out.println("you didnot have sufficient balance");
+		}
+	}
+	
+	public void ViewAccountDetails() {
+		System.out.println("Account Number : "+this.Accountnumber);
+		System.out.println("Account Holder Name : "+this.AccountHolderName);
+		System.out.println("Account Balance : "+this.AccountBalance);
+	}
+	
+}
+public class Bank_System {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the account holder name : ");
+		String name = sc.nextLine();
+		System.out.println("Enter the initial balance");
+		double balance = sc.nextDouble();
+		
+		BankAccount acc = new BankAccount(name,balance);
+		
+		
+		while(true) {
+			System.out.println("1.view balance");
+			System.out.println("2.deposit");
+			System.out.println("3.withdraw");
+			System.out.println("4.View account details");
+			System.out.println("5.exit");
+			int n = sc.nextInt();
+			
+			switch(n) {
+			case 1:
+				System.out.println("view initial balance : " + balance);
+				break;
+			case 2:
+				System.out.println("Enter the amount to be deposit:");
+				double deposit_amount = sc.nextDouble();
+				acc.deposit(deposit_amount);
+				break;
+			case 3:
+				System.out.println("Enter the amount to withdraw");
+				double withdraw=sc.nextDouble();
+				acc.Withdraw(withdraw);
+				break;
+			case 4:
+				System.out.println("Account details :");
+				acc.ViewAccountDetails();
+				break;
+			case 5:
+				System.out.println("Thanking you for coming to our bank");
+				return;
+			default:
+				System.out.println("invalid option you have chosen");
+				}
+			
+		}
+	}
+
+}
